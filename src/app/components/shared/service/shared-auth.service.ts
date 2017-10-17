@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
-import {JwtHelper} from 'angular2-jwt';
+import { Injectable } from '@angular/core';
+import { JwtHelper } from 'angular2-jwt';
 
-import {SharedStorageService} from './shared-storage.service';
+import { SharedStorageService } from './shared-storage.service';
 
 @Injectable()
 export class SharedAuthService {
@@ -34,7 +34,7 @@ export class SharedAuthService {
     login(data) {
         this.setLoggedIn(true);
         this.setLoggedInUserToken(data.token);
-        
+
         //Decode the token and fetch the user data out of it.
         this.retrieveLoggedInUserToken();
     }
@@ -85,7 +85,7 @@ export class SharedAuthService {
      */
     retrieveLoggedInUserToken() {
         var decodedToken = this._jwtHelper.decodeToken(this.getLoggedInUserToken());
-        if(decodedToken) {
+        if (decodedToken) {
             this.setLoggedInUserData(decodedToken.user);
         }
     }

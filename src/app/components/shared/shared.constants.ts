@@ -2,13 +2,13 @@ export let mode: string = 'dev'; //possible values dev, qa, stg, prod
 
 //API Url
 if (mode == 'dev') {
-    var apiURL: string = 'http://localhost/canvas-api/api/';
+    var apiURL: string = 'http://localhost:3000/';
 } else if (mode == 'qa') {
-    var apiURL: string = 'http://localhost/canvas-api/api/';
+    var apiURL: string = 'http://localhost:3000/';
 } else if (mode == 'stg') {
-    var apiURL: string = 'http://localhost/canvas-api/api/';
+    var apiURL: string = 'http://localhost:3000/';
 } else if (mode == 'prod') {
-    var apiURL: string = 'http://localhost/canvas-api/api/';
+    var apiURL: string = 'http://localhost:3000/';
 }
 
 //Pagination

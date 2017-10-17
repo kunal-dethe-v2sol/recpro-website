@@ -1,0 +1,28 @@
+<!--BEGIN CONTAINER -->
+<div class="page-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form [formGroup]="form" (ngSubmit)="onSubmit()" id="form" class="form-horizontal">
+                    <div class="col-md-8">
+                        <div class="form-group" [class.has-error]="!name.valid && !name.pristine">
+                            <div class="col-xs-5">
+                                <input type="name" class="form-control" autofocus placeholder="name" formControlName="name" name required>
+                                <ng2-mdf-validation-message [control]="name" *ngIf="!name.pristine" [class]="'text-danger'"></ng2-mdf-validation-message>
+                            </div>
+                        </div>
+                        <div class="col-xs-4">
+                            <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                Organization List
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END CONTAINER -->

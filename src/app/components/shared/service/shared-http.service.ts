@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
-import {Http, Response, Headers, RequestOptions, RequestMethod} from '@angular/http';
-import {Observable} from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
+import { Http, Response, Headers, RequestOptions, RequestMethod } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/map';
 
-import {CONST} from './../shared.constants';
-import {SharedToastrService} from './shared-toastr.service';
-import {SharedAuthService} from './../service/shared-auth.service';
+import { CONST } from './../shared.constants';
+import { SharedToastrService } from './shared-toastr.service';
+import { SharedAuthService } from './../service/shared-auth.service';
 
 @Injectable()
 export class SharedHttpService {
@@ -30,7 +30,7 @@ export class SharedHttpService {
         private _sharedToastrService,
         private _sharedAuthService) {
 
-        
+
     }
 
     prepareHeaders() {
@@ -38,17 +38,16 @@ export class SharedHttpService {
             'Authorization': 'Bearer ' + this._sharedAuthService.getLoggedInUserToken(),
             //'Content-Type': 'multipart/form-data'
         });
-        
+
         this._options = new RequestOptions({
             headers: this._headers
         });
     }
 
-   get(endpoint, params = null) {
-       this.prepareHeaders();
+    get(endpoint, params = null) {
+        this.prepareHeaders();
 
         var that = this;
-        endpoint += '.json';
         var queryString = params ? that._objectToQueryString(params) : '';
         endpoint = endpoint + (queryString ? '?' + queryString : '');
         return that._http
@@ -65,7 +64,6 @@ export class SharedHttpService {
         this.prepareHeaders();
 
         var that = this;
-        endpoint += '.json';
         var queryString = params ? this._objectToQueryString(params) : '';
         endpoint = endpoint + (queryString ? '?' + queryString : '');
         return this._http
@@ -82,7 +80,6 @@ export class SharedHttpService {
         this.prepareHeaders();
 
         var that = this;
-        endpoint += '.json';
         var queryString = params ? this._objectToQueryString(params) : '';
         endpoint = endpoint + (queryString ? '?' + queryString : '');
         return this._http
@@ -97,16 +94,15 @@ export class SharedHttpService {
 
     delete(endpoint, data = {}, params = null) {
         this.prepareHeaders();
-        
+
         var that = this;
-        endpoint += '.json';
         var queryString = params ? this._objectToQueryString(params) : '';
         endpoint = endpoint + (queryString ? '?' + queryString : '');
 
         var options = JSON.parse(JSON.stringify(this._options));
         options['method'] = RequestMethod.Delete;
         options['body'] = data;
-        
+
         return this._http
             .delete(this._apiUrl + endpoint, options)
             .map(function (response) {
@@ -127,10 +123,10 @@ export class SharedHttpService {
     private _extractData(res: Response) {
         var that = this;
         if (res.status == 500) {
-            let body = <any> res.json().response;
+            let body = <any>res.json().response;
             that._sharedToastrService.pop('error', 'Error', body);
         } else {
-            let body = <any> res.json().response;
+            let body = <any>res.json().response;
             if (body) {
                 body = Object.keys(body).map(key => body[key]);
             }

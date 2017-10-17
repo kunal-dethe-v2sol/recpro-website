@@ -24,8 +24,11 @@
     "angular2-jwt": "^0.2.3",
     "angular2-toaster": "^4.0.1",
     "core-js": "^2.4.1",
+    "ng2-mdf-validation-messages": "^0.1.5",
     "ng2-webstorage": "^1.8.0",
     "rxjs": "^5.4.1",
+    "types": "^0.1.1",
+    "typings": "^2.1.1",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

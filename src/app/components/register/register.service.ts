@@ -3,10 +3,10 @@ import { Observable } from 'rxjs/Observable';
 import { SharedService } from './../shared/service/shared.service';
 
 @Injectable()
-export class LoginService {
+export class RegisterService {
 
     //Variables
-    _endpoint = 'login';
+    _endpoint = 'users';
 
     //Constructor parameters
     static get parameters() {
@@ -23,7 +23,7 @@ export class LoginService {
     }
 
     //Custom Methods
-    login(data): Observable<any> {
+    register(data): Observable<any> {
         return this._sharedService.getHttpService().post(this._endpoint, data);
     }
 }

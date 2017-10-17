@@ -1,0 +1,68 @@
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<toaster-container></toaster-container>
+<!-- END HEADER & CONTENT DIVIDER -->
+
+<!-- BEGIN CONTAINER -->
+<div class="page-container">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- BEGIN HEADER -->
+            <div class="col-md-12">
+                <div class="col-md-12">
+                    <!-- BEGIN MENU -->
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>                        
+                                </button>
+                                <a class="navbar-brand" [routerLink]="['/']">Welcome <span *ngIf="loggedInUserData">{{loggedInUserData.full_name}}</span></a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                                <ul class="nav navbar-nav">
+                                    <li routerLinkActive="active"><a [routerLink]="['/dashboard']">Dashboard</a></li>
+                                    
+                                    <li class="dropdown">
+                                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Masters <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a [routerLink]="['/organization']">Organization</a></li>
+                                            <li><a [routerLink]="['/dashboard']">Location</a></li>
+                                            <li><a [routerLink]="['/dashboard']">Designation</a></li>
+                                            <li><a [routerLink]="['/dashboard']">Keywords</a></li>
+                                            <li><a [routerLink]="['/dashboard']">Industry</a></li>
+                                            <li><a [routerLink]="['/dashboard']">Functional Area</a></li>
+                                            <li><a [routerLink]="['/dashboard']">Job Role</a></li>
+                                            <li><a [routerLink]="['/dashboard']">UG</a></li>
+                                            <li><a [routerLink]="['/dashboard']">PG</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="javascript:void(0);" (click)="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- END MENU -->
+                </div>
+            </div>
+            <!-- END HEADER -->
+            <!-- BEGIN CONTENT WRAPPER -->
+            <div class="col-md-12">
+                <!-- BEGIN CONTENT -->
+                <div class="col-md-12">
+                    <router-outlet></router-outlet>
+                </div>
+                <!-- END CONTENT -->
+            </div>
+            <!-- END CONTENT WRAPPER -->
+            <!-- BEGIN FOOTER -->
+            Footer
+            <!-- END FOOTER -->
+        </div>
+    </div>
+</div>
+<!-- END CONTAINER -->

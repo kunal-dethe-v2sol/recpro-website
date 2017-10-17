@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {SharedService} from './components/shared/service/shared.service';
+import { SharedService } from './components/shared/service/shared.service';
 
 @Component({
     selector: 'recpro-root',

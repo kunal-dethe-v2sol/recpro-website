@@ -1,5 +1,5 @@
-import {Injectable} from '@angular/core';
-import {ToasterService} from 'angular2-toaster';
+import { Injectable } from '@angular/core';
+import { ToasterService } from 'angular2-toaster';
 
 @Injectable()
 export class SharedToastrService {
@@ -16,7 +16,7 @@ export class SharedToastrService {
     //Constructor
     constructor(
         private _toastrService) {
-        
+
         return this._toastrService;
     }
 }

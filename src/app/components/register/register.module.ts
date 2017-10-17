@@ -1,14 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { LoginService } from './login.service';
+import { RegisterService } from './register.service';
 
 @NgModule({
     imports: [
         CommonModule
     ],
     providers: [
-        LoginService
+        RegisterService
     ]
 })
-export class LoginModule { }
+export class RegisterModule { }

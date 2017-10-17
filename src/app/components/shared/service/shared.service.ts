@@ -1,10 +1,10 @@
-import {Injectable, EventEmitter} from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
-import {SharedAuthService} from './shared-auth.service';
-import {SharedHttpService} from './shared-http.service';
-import {SharedStorageService} from './shared-storage.service';
-import {SharedToastrService} from './shared-toastr.service';
-import {SharedCustomValidationService} from './../../shared/service/shared-custom-validation.service';
+import { SharedAuthService } from './shared-auth.service';
+import { SharedHttpService } from './shared-http.service';
+import { SharedStorageService } from './shared-storage.service';
+import { SharedToastrService } from './shared-toastr.service';
+import { SharedCustomValidationService } from './../../shared/service/shared-custom-validation.service';
 
 @Injectable()
 export class SharedService {
@@ -31,7 +31,7 @@ export class SharedService {
         private _toastrService,
         private _customValidationService) {
 
-        
+
     }
 
     //Custom Methods
@@ -58,21 +58,21 @@ export class SharedService {
     getStorageService() {
         return this._storageService;
     }
-    
+
     /**
      * Returns the Toastr Service instance.
      */
     getToastrService() {
         return this._toastrService;
     }
-    
+
     /**
      * Returns the Custom Validation Service instance.
      */
     getCustomValidationService() {
         return this._customValidationService;
     }
-    
+
     /**
      * Returns the loggedInUserUserData
      */

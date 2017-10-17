@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-    selector: 'canvas-shared-header-guest',
-    templateUrl: './shared-header-guest.component.html'
+    selector: 'recpro-shared-layout-guest',
+    templateUrl: './shared-layout-guest.component.html'
 })
-export class SharedHeaderGuestComponent implements OnInit {
+export class SharedLayoutGuestComponent implements OnInit {
 
     //Variables
 

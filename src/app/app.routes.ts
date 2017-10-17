@@ -1,18 +1,17 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
-import {LoginComponent} from './components/login/login.component';
-import {HomeComponent} from './components/home/home.component';
+import {LandingComponent} from './components/landing/landing.component';
 
 import {SharedCanActivateAuthService} from './components/shared/service/shared-can-activate-auth.service';
 
 const routes: Routes = [
     {
         path: '',
-        component: LoginComponent,
+        component: LandingComponent,
         canActivate: [SharedCanActivateAuthService]
     },
-    {path: '**', pathMatch: 'full', redirectTo: '/login'}
+    {path: '**', pathMatch: 'full', redirectTo: '/'}
 ];
 
 @NgModule({

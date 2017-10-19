@@ -5,6 +5,7 @@ import { ValidationExtensions } from 'ng2-mdf-validation-messages';
 
 import { SharedService } from './../shared/service/shared.service';
 import { OrganizationService } from './organization.service';
+import {CONST} from './../shared/shared.constants';
 
 @Component({
     selector: 'recpro-organization',
@@ -13,6 +14,12 @@ import { OrganizationService } from './organization.service';
 export class OrganizationComponent implements OnInit {
 
     //Variables
+    organizations = [];
+    showBusy = true;
+    page = 1;
+    limit = CONST['paginationLimitShortListing'];
+    total_count = 0;
+
     form: FormGroup;
     name: FormControl;
 
@@ -40,11 +47,21 @@ export class OrganizationComponent implements OnInit {
 
     //Angular Hooks
     ngOnInit() {
+        this.list();
         this.createForm();
-
     }
 
     //Custom Methods
+    previousPage() {
+        this.page--;
+        this.list();
+    }
+    
+    nextPage() {
+        this.page++;
+        this.list();
+    }
+
     createForm() {
         this.name = this._fb.control('', [
             ValidationExtensions.required()
@@ -55,19 +72,38 @@ export class OrganizationComponent implements OnInit {
         });
     }
 
+    list() {
+        this.showBusy = true;
+        this.organizations = [];
+        
+        this._organizationService
+            .list(this.page, this.limit)
+            .subscribe(
+            response => {
+                this.showBusy = false;
+                this.organizations = response[0].organizations.rows;
+                this.total_count = response[0].organizations.count;
+            },
+            error => {
+                console.log('error: ', error);
+            });
+    }
+
     onSubmit(): void {
         var formValues = this.form.value;
         console.log('this.form', this.form);
         console.log('formValues', formValues);
 
-        var data = new FormData();
-        data.append("name", formValues.name);
+        var data = {
+            name: formValues.name
+        }
         console.log('data', data);
 
         this._organizationService
             .new(data)
             .subscribe(
             response => {
+				console.log('response', response);
                 this._sharedService.getToastrService().pop('success', 'Success', response[0]);
                 
             },

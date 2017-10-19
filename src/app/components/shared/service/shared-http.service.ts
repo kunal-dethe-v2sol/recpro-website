@@ -36,6 +36,7 @@ export class SharedHttpService {
     prepareHeaders() {
         this._headers = new Headers({
             'Authorization': 'Bearer ' + this._sharedAuthService.getLoggedInUserToken(),
+            //'Content-Type': 'application/x-www-form-urlencoded'
             //'Content-Type': 'multipart/form-data'
         });
 

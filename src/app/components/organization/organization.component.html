@@ -20,7 +20,26 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                Organization List
+                <div *ngIf="showBusy" class="list-group">
+                    Loading...
+                </div>
+                <div *ngIf="showBusy == false && total_count == 0" class="list-group">
+                    No organizations found.
+                </div>
+                <div *ngIf="total_count" class="list-group">
+                    <div *ngFor="let organization of organizations" class="list-group-item">
+                        <div class="row">
+                            <div class="col-md-12">
+                                {{organization.name}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="total_count" class="list-group-item text-right">
+                        <button *ngIf="page > 1" [disabled]="showBusy" (click)="previousPage()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Previous</button>
+                        <button *ngIf="total_count && (page + limit <= total_count)" [disabled]="showBusy" (click)="nextPage()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Next</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

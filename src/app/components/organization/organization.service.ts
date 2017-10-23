@@ -6,7 +6,7 @@ import { SharedService } from './../shared/service/shared.service';
 export class OrganizationService {
 
     //Variables
-    _endpoint = 'organizations';
+    endpoint = 'organizations';
 
     //Constructor parameters
     static get parameters() {
@@ -23,18 +23,4 @@ export class OrganizationService {
     }
 
     //Custom Methods
-    list(page = 1, limit = 0): Observable<any> {
-        var queryStringParams = {
-            page: page
-        }
-        if(limit) {
-            queryStringParams['limit'] = limit;
-        }
-        return this._sharedService.getHttpService().get(this._endpoint, queryStringParams);
-    }
-
-    new(postData) {
-        var endpoint = this._endpoint;
-        return this._sharedService.getHttpService().post(endpoint, postData, {});
-    }
 }

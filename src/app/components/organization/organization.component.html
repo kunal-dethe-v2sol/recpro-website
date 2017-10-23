@@ -3,6 +3,10 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
+                <p *ngIf="!organization.id">Create</p>
+                <p *ngIf="organization.id">Update</p>
+            </div>
+            <div class="col-md-12">
                 <form [formGroup]="form" (ngSubmit)="onSubmit()" id="form" class="form-horizontal">
                     <div class="col-md-8">
                         <div class="form-group" [class.has-error]="!name.valid && !name.pristine">
@@ -13,12 +17,20 @@
                         </div>
                         <div class="col-xs-4">
                             <button type="submit" class="btn btn-primary" [disabled]="!form.valid">Submit</button>
+                            <button type="button" class="btn btn-warning" (click)="resetForm()">Cancel</button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
+
+        <hr />
+
         <div class="row">
+            <div class="col-md-12">
+                <p>List</p>
+            </div>
+
             <div class="col-md-12">
                 <div *ngIf="showBusy" class="list-group">
                     Loading...
@@ -29,15 +41,19 @@
                 <div *ngIf="total_count" class="list-group">
                     <div *ngFor="let organization of organizations" class="list-group-item">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-10">
                                 {{organization.name}}
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-info" (click)="copy(organization.id)">Copy</button>
+                                <button class="btn btn-primary" (click)="edit(organization.id)">Edit</button>
+                                <button class="btn btn-danger" (click)="delete(organization.id)">Delete</button>
                             </div>
                         </div>
                     </div>
-
                     <div *ngIf="total_count" class="list-group-item text-right">
                         <button *ngIf="page > 1" [disabled]="showBusy" (click)="previousPage()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Previous</button>
-                        <button *ngIf="total_count && (page + limit <= total_count)" [disabled]="showBusy" (click)="nextPage()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Next</button>
+                        <button *ngIf="total_count && (page * limit < total_count)" [disabled]="showBusy" (click)="nextPage()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Next</button>
                     </div>
                 </div>
             </div>

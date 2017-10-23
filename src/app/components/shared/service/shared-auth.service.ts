@@ -101,7 +101,7 @@ export class SharedAuthService {
      * Returns the logged in user's data.
      */
     getLoggedInUserData() {
-        if (!this._loggedInUserData.uuid) {
+        if (!this._loggedInUserData.id) {
             this.retrieveLoggedInUserToken();
         }
         return this._loggedInUserData;

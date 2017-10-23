@@ -4,16 +4,18 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ValidationExtensions } from 'ng2-mdf-validation-messages';
 
 import { SharedService } from './../shared/service/shared.service';
-import { OrganizationService } from './organization.service';
-import {CONST} from './../shared/shared.constants';
+import { SharedMastersService } from './../shared/masters/shared.masters.service';
+import { CONST } from './../shared/shared.constants';
 
 @Component({
     selector: 'recpro-organization',
-    templateUrl: './organization.component.html'
+    templateUrl: './organization.component.html',
+    providers: [SharedMastersService]
 })
 export class OrganizationComponent implements OnInit {
 
     //Variables
+    organization: any = {};
     organizations = [];
     showBusy = true;
     page = 1;
@@ -27,7 +29,7 @@ export class OrganizationComponent implements OnInit {
     static get parameters() {
         return [
             SharedService,
-            OrganizationService,
+            SharedMastersService,
             Router,
             ActivatedRoute,
             FormBuilder
@@ -37,7 +39,7 @@ export class OrganizationComponent implements OnInit {
     //Constructor
     constructor(
         private _sharedService,
-        private _organizationService,
+        private _sharedMastersService,
         private _router,
         private _activatedRoute,
         private _fb) {
@@ -47,6 +49,8 @@ export class OrganizationComponent implements OnInit {
 
     //Angular Hooks
     ngOnInit() {
+        this._sharedMastersService.endpoint = 'organizations';
+
         this.list();
         this.createForm();
     }
@@ -56,7 +60,7 @@ export class OrganizationComponent implements OnInit {
         this.page--;
         this.list();
     }
-    
+
     nextPage() {
         this.page++;
         this.list();
@@ -72,43 +76,113 @@ export class OrganizationComponent implements OnInit {
         });
     }
 
+    loadForm() {
+        this.name = this._fb.control(this.organization.name, [
+            ValidationExtensions.required()
+        ]);
+
+        this.form = this._fb.group({
+            name: this.name
+        });
+    }
+
+    resetForm() {
+        this.form.reset();
+        this.organization = {};
+    }
+
     list() {
         this.showBusy = true;
         this.organizations = [];
-        
-        this._organizationService
+
+        this._sharedMastersService
             .list(this.page, this.limit)
             .subscribe(
             response => {
                 this.showBusy = false;
-                this.organizations = response[0].organizations.rows;
-                this.total_count = response[0].organizations.count;
+                this.organizations = response[0].models.rows;
+                this.total_count = response[0].models.count;
             },
             error => {
-                console.log('error: ', error);
+                this._sharedService.getToastrService().pop('error', 'Error', error);
+            });
+    }
+
+    copy(id) {
+        this._sharedMastersService
+            .detail(id)
+            .subscribe(
+            response => {
+                this.organization = {
+                    name: response[0].model.name
+                };
+                this.loadForm();
+            },
+            error => {
+                this._sharedService.getToastrService().pop('error', 'Error', error);
+            });
+    }
+
+    edit(id) {
+        this._sharedMastersService
+            .detail(id)
+            .subscribe(
+            response => {
+                this.organization = response[0].model;
+                this.loadForm();
+            },
+            error => {
+                this._sharedService.getToastrService().pop('error', 'Error', error);
             });
     }
 
     onSubmit(): void {
         var formValues = this.form.value;
-        console.log('this.form', this.form);
-        console.log('formValues', formValues);
 
         var data = {
             name: formValues.name
         }
-        console.log('data', data);
 
-        this._organizationService
-            .new(data)
-            .subscribe(
-            response => {
-				console.log('response', response);
-                this._sharedService.getToastrService().pop('success', 'Success', response[0]);
-                
-            },
-            error => {
-                this._sharedService.getToastrService().pop('error', 'Error', error);
-            });
+        if (this.organization.id) {
+            this._sharedMastersService
+                .update(this.organization.id, data)
+                .subscribe(
+                response => {
+                    this.resetForm();
+                    this.list();
+                    this._sharedService.getToastrService().pop('success', 'Success', response[0]);
+                },
+                error => {
+                    this.resetForm();
+                    this._sharedService.getToastrService().pop('error', 'Error', error);
+                });
+        } else {
+            this._sharedMastersService
+                .create(data)
+                .subscribe(
+                response => {
+                    this.resetForm();
+                    this.list();
+                    this._sharedService.getToastrService().pop('success', 'Success', response[0]);
+                },
+                error => {
+                    this.resetForm();
+                    this._sharedService.getToastrService().pop('error', 'Error', error);
+                });
+        }
+    }
+
+    delete(id) {
+        if (confirm('Do you wish to delete this record?')) {
+            this._sharedMastersService
+                .delete(id)
+                .subscribe(
+                response => {
+                    this.list();
+                },
+                error => {
+                    this._sharedService.getToastrService().pop('error', 'Error', error);
+                });
+        }
     }
 }
